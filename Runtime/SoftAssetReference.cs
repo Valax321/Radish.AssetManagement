@@ -13,6 +13,28 @@ namespace Radish.AssetManagement
         public bool isValid => !string.IsNullOrEmpty(m_Guid);
         public string path => BuildResourcesManifest.instance.GetResourcePathForAsset(this);
 
+        public ScopedAsyncOperation<T> LoadAsync()
+        {
+            if (!isValid)
+            {
+                throw new InvalidOperationException("Reference is not valid");
+            }
+
+            var p = path;
+            if (string.IsNullOrEmpty(path))
+                throw new ResourceNotFoundException(m_Guid, typeof(T));
+
+            var op = ScopedAsyncOperation<T>.Create(out var token);
+
+            var r = Resources.LoadAsync<T>(p);
+            r.completed += _ =>
+            {
+                token.Complete(r.asset as T);
+            };
+
+            return op;
+        }
+
         public override string ToString()
         {
 #if !UNITY_EDITOR
