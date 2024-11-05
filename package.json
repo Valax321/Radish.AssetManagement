@@ -1,0 +1,27 @@
+{
+    "name": "com.radish.assetmanagement",
+    "displayName": "Radish Asset Management",
+    "author": {
+      "name": "Audrey Castillo",
+      "email": "valax321@gmail.com",
+      "url": "https://audrey.zone"
+    },
+    "version": "1.0.0",
+    "unity": "6000.0",
+    "description": "Runtime asset management utilties for Radish games.",
+    "keywords": [
+      "assets",
+      "resources",
+      "loading",
+      "async"
+    ],
+    "license": "MIT",
+    "category": "Editor",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Valax321/Radish.AssetManagement"
+    },
+    "dependencies": {
+      "com.radish.core": "1.0.0"
+    }
+  }
