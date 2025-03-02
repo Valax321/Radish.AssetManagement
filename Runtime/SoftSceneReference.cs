@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Radish.AssetManagement
 {
@@ -11,6 +12,24 @@ namespace Radish.AssetManagement
         public string guid => m_Guid;
 
         public bool isValid => !string.IsNullOrEmpty(m_Guid);
+
+#if UNITY_EDITOR
+        public static SoftSceneReference Wrap(UnityEditor.SceneAsset scene)
+        {
+            return new SoftSceneReference
+            {
+                m_Guid = UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(scene))
+            };
+        }
+        
+        public static SoftSceneReference Wrap(in Scene scene)
+        {
+            return new SoftSceneReference
+            {
+                m_Guid = UnityEditor.AssetDatabase.AssetPathToGUID(scene.path)
+            };
+        }
+#endif
 
         public override string ToString()
         {
