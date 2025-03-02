@@ -1,7 +1,7 @@
 ﻿#if ODIN_INSPECTOR
+using Sirenix.Utilities.Editor;
 #endif
 using System;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
