@@ -116,9 +116,22 @@ namespace Radish.AssetManagement
             return string.Empty;
         }
 
+        [PublicAPI]
         public IEnumerable<IBuildResourcesManifestEntry> GetResourcesInBuild<T>() where T : Object
         {
             return m_Entries.Where(x => x.type != null && x.type.IsSubclassOf(typeof(T)) || x.type == typeof(T));
+        }
+
+        [PublicAPI]
+        public bool ContainsAssetPath(string path)
+        {
+            foreach (var e in m_Entries)
+            {
+                if (e.path.Equals(path, StringComparison.InvariantCultureIgnoreCase))
+                    return true;
+            }
+
+            return false;
         }
 
         public void OnBeforeSerialize()
