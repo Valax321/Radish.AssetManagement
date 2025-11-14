@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace Radish.AssetManagement
             return Resources.Load<BuildScenesManifest>(nameof(BuildScenesManifest));
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         [PublicAPI]
         public static BuildScenesManifest Create()
         {
@@ -52,10 +53,12 @@ namespace Radish.AssetManagement
             manifest.OnAfterDeserialize();
             return manifest;
         }
-        #endif
+#endif
 
         [SerializeField] private List<Entry> m_Entries = new();
-        [SerializeField] private Dictionary<string, Entry> m_EntryLookup = new();
+        private readonly Dictionary<string, Entry> m_EntryLookup = new();
+
+        public IEnumerable<(string, string)> scenes => m_Entries.Select(x => (x.path, x.guid));
 
         [PublicAPI]
         public string GetScenePathForAsset(SoftSceneReference scene)

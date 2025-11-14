@@ -14,7 +14,7 @@ namespace Radish.AssetManagement
         public bool isValid => !string.IsNullOrEmpty(m_Guid);
 
 #if UNITY_EDITOR
-        public static SoftSceneReference Wrap(UnityEditor.SceneAsset scene)
+        public static SoftSceneReference Of(UnityEditor.SceneAsset scene)
         {
             return new SoftSceneReference
             {
@@ -22,7 +22,7 @@ namespace Radish.AssetManagement
             };
         }
         
-        public static SoftSceneReference Wrap(in Scene scene)
+        public static SoftSceneReference Of(in Scene scene)
         {
             return new SoftSceneReference
             {
@@ -30,6 +30,14 @@ namespace Radish.AssetManagement
             };
         }
 #endif
+
+        public static SoftSceneReference FromGuid(string guid)
+        {
+            return new SoftSceneReference
+            {
+                m_Guid = guid
+            };
+        }
 
         public override string ToString()
         {

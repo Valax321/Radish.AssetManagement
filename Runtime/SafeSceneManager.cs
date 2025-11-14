@@ -18,7 +18,7 @@ namespace Radish.AssetManagement
         public static OnSceneLoadBegin onSceneLoadBegin { get; set; }
         public static OnSceneUnloadBegin onSceneUnloadBegin { get; set; }
         
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void Init()
         {
             buildScenesManifest = BuildScenesManifest.Load();
