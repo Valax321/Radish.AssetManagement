@@ -33,7 +33,7 @@ namespace Radish.AssetManagement
             #if UNITY_EDITOR
             if (Application.isEditor)
             {
-                return Create();
+                return Create(false);
             }
             #endif
 
@@ -42,12 +42,22 @@ namespace Radish.AssetManagement
 
 #if UNITY_EDITOR
         [PublicAPI]
-        public static BuildScenesManifest Create()
+        public static BuildScenesManifest Create(bool isForBuild)
         {
             var manifest = CreateInstance<BuildScenesManifest>();
-            foreach (var assetGuid in AssetDatabase.FindAssets($"t:{nameof(SceneAsset)}"))
+            if (isForBuild)
             {
-                manifest.m_Entries.Add(new Entry(assetGuid, AssetDatabase.GUIDToAssetPath(assetGuid)));
+                foreach (var asset in EditorBuildSettings.scenes)
+                {
+                    manifest.m_Entries.Add(new Entry(asset.guid.ToString(), asset.path));
+                }
+            }
+            else
+            {
+                foreach (var assetGuid in AssetDatabase.FindAssets($"t:{nameof(SceneAsset)}"))
+                {
+                    manifest.m_Entries.Add(new Entry(assetGuid, AssetDatabase.GUIDToAssetPath(assetGuid)));
+                }
             }
 
             manifest.OnAfterDeserialize();

@@ -18,7 +18,7 @@ namespace Radish.AssetManagement
         
         public void OnPreprocessBuild(BuildReport report)
         {
-            var sceneManifest = BuildScenesManifest.Create();
+            var sceneManifest = BuildScenesManifest.Create(true);
             var resourceManifest = BuildResourcesManifest.Create();
 
             if (!Directory.Exists("Assets/Resources"))
